@@ -16,33 +16,11 @@
           <li th:unless="${activePage == 'home'}" class="nav-item">
               <a class="nav-link" th:href="@{/?activePage=home}">Home</a>
           </li>
-
-          <li th:if="${activePage == 'personen'}" class="nav-item">
-            <a class="nav-link active" th:href="@{/personen}">Personen</a>
+          <li th:if="${activePage == 'caesar'}" class="nav-item">
+            <a class="nav-link active" th:href="@{/?activePage=caesar}">Caesar</a>
           </li>
-          <li th:unless="${activePage == 'personen'}" class="nav-item">
-              <a class="nav-link" th:href="@{/personen}">Personen</a>
-          </li>
-
-          <li th:if="${activePage == 'impressum'}" class="nav-item">
-            <a class="nav-link active" th:href="@{/impressum}">Impressum</a>
-          </li>
-          <li th:unless="${activePage == 'impressum'}" class="nav-item">
-              <a class="nav-link" th:href="@{/?activePage=impressum}">Impressum</a>
-          </li>
-
-          <li th:if="${activePage == 'filme'}" class="nav-item">
-            <a class="nav-link active" th:href="@{/filme}">Filme</a>
-          </li>
-          <li th:unless="${activePage == 'filme'}" class="nav-item">
-              <a class="nav-link" th:href="@{/filme}">Filme</a>
-          </li>
-
-          <li th:if="${activePage == 'spiel'}" class="nav-item">
-            <a class="nav-link active" th:href="@{/spiel}">Spiel</a>
-          </li>
-          <li th:unless="${activePage == 'spiel'}" class="nav-item">
-              <a class="nav-link" th:href="@{/spiel}">Spiel</a>
+          <li th:unless="${activePage == 'caesar'}" class="nav-item">
+              <a class="nav-link" th:href="@{/?activePage=caesar}">Caesar</a>
           </li>
 
         </ul>
