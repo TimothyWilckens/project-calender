@@ -1,29 +1,49 @@
-<!-- 
-  Die Navbar - hier befindet sich die Navigationsbar. Die gesamte Datei wird dynamisch per Link in die index.html eingebunden. Der Vorteil: Wenn du hier etwas änderst, wird das auf allen anderen Seiten ebenfalls übernommen. 
--->
-<nav class="navbar navbar-dark navbar-expand-lg bg-dark container">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#">JS Vorlage</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          
-          <li th:if="${activePage == 'home'}" class="nav-item">
-            <a class="nav-link active" th:href="@{/?activePage=home}">Home</a>
-          </li>
-          <li th:unless="${activePage == 'home'}" class="nav-item">
-              <a class="nav-link" th:href="@{/?activePage=home}">Home</a>
-          </li>
-          <li th:if="${activePage == 'caesar'}" class="nav-item">
-            <a class="nav-link active" th:href="@{/?activePage=caesar}">Caesar</a>
-          </li>
-          <li th:unless="${activePage == 'caesar'}" class="nav-item">
-              <a class="nav-link" th:href="@{/?activePage=caesar}">Caesar</a>
-          </li>
+<nav>
+    <div class="nav-wrapper">
+      <a href="/" class="brand-logo center">
+        <i class="material-icons">date_range</i>Kalender Projekt</a>
+      <ul class="right hide-on-med-and-down">
+        <li th:if="${activePage == 'home'}">
+          <a class="active" th:href="@{/?activePage=home}">Home</a>
+        </li>
+        <li th:unless="${activePage == 'home'}">
+          <a th:href="@{/?activePage=home}">Home</a>
+        </li>
 
-        </ul>
-      </div>
+        <li th:if="${activePage == 'terminliste'}">
+          <a class="active" th:href="@{/terminliste}">
+            <i class="material-icons left">format_list_bulleted</i>Anstehende Termine</a>
+        </li>
+        <li th:unless="${activePage == 'terminliste'}">
+          <a th:href="@{/terminliste}">
+            <i class="material-icons left">format_list_bulleted</i>Anstehende Termine</a>
+        </li>
+
+        <li th:if="${activePage == 'kalenderansicht'}">
+          <a class="active" th:href="@{/kalenderansicht}">
+            <i class="material-icons left">today</i>Kalender</a>
+        </li>
+        <li th:unless="${activePage == 'kalenderansicht'}">
+          <a th:href="@{/kalenderansicht}">
+            <i class="material-icons left">today</i>Kalender</a>
+        </li>
+
+        <li th:if="${activePage == 'allaccounts'}">
+          <a class="active" th:href="@{/allaccounts}">Alle Nutzer</a>
+        </li>
+        <li th:unless="${activePage == 'allaccounts'}">
+          <a th:href="@{/allaccounts}">Alle Nutzer</a>
+        </li>
+      </ul>
     </div>
-  </nav>
+</nav>
+
+ 
+ <!-- Compiled and minified CSS -->
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+ <!-- Compiled and minified JavaScript -->
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+ <!-- Icons -->
+ <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">

@@ -1,0 +1,45 @@
+<h1>Anstehende Termine</h1>
+
+<table>
+    <thead>
+      <tr>
+        <th>Terminnummer</th>
+        <th>Name</th>
+        <th>Datum</th>
+      </tr>
+    </thead>
+
+    
+    <tr th:each="kalenderevent, counter: ${kalenderevents}">
+        <td>
+            <a th:text="${counter.count}"></a>
+        </td>
+        <td>
+            <a th:text="${kalenderevent.getName()}"></a>
+        </td>
+        <td>
+            <a th:text="${kalenderevent.getDate()}"></a>
+        </td>
+        <td>
+            <a class="waves-effect waves-light btn" th:href="@{/change}">
+                <i class="small material-icons">border_color</i>
+            </a>
+        </td>
+    </tr>
+</table>
+
+<h1> 
+
+</h1>
+<a class="waves-effect waves-light btn" th:href="@{/addevent}">
+    <i class="large material-icons">add</i>
+</a>
+
+<!-- Compiled and minified CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+<!-- Compiled and minified JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+<!-- Icons -->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">

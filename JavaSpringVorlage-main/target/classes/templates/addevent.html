@@ -1,0 +1,23 @@
+<h3>Neuer Film</h3>
+<hr>
+<form th:action="@{/addeventsubmit}" class="col-4">
+    <div class="mb-3">
+      <label for="name" class="form-label">Name</label>
+      <input type="text" class="form-control" id="name" placeholder="Name des Events" th:name="name">
+    </div>
+
+    <div class="mb-3">
+      <input type="date" class="datepicker" format="dd-mm-yyyy" autoClose="true" th:name="date">
+    </div>
+
+    <div class="col-auto">
+      <button type="submit" class="btn btn-success mb-3">Neuen Eintrag bestätigen</button>
+    </div>
+</form>
+<a class="btn btn-success btn-sm" role="button" th:href="@{/terminliste}">Abbrechen</a>
+
+<!-- Compiled and minified CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+<!-- Compiled and minified JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
