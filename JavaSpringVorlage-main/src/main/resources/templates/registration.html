@@ -1,0 +1,29 @@
+<h3>Neuer Account</h3>
+<hr>
+<form th:action="@{/registrationsubmit}" class="col-4">
+    <div class="mb-3">
+      <label for="username" class="form-label">Name</label>
+      <input type="text" class="form-control" id="username" placeholder="Accountname" th:name="username" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="email" class="form-label">Mail</label>
+        <input type="email" class="form-control" id="email" placeholder="Accountmail" th:name="email" required>
+      </div>
+
+    <div class="mb-3">
+        <label for="password" class="form-label">Passwort</label>
+        <input type="text" class="form-control" id="password" placeholder="Passwort" th:name="password" required>
+    </div>
+
+    <div class="col-auto">
+      <button type="submit" class="btn btn-success mb-3">Neuen Account einrichten</button>
+    </div>
+</form>
+<a class="btn btn-success btn-sm" role="button" th:href="@{/}">Abbrechen</a>
+
+<!-- Compiled and minified CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+<!-- Compiled and minified JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>

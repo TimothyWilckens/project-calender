@@ -1,0 +1,36 @@
+<h1>Deine Daten</h1>
+
+<h1>
+    
+</h1>
+
+<h5>
+    Name
+</h5>
+
+<a th:text="${currentuser.getUsername()}"></a>
+
+<h5>
+    Mailadresse
+</h5>
+
+<a th:text="${currentuser.getEmail()}"></a>
+
+<h5>
+    Passwort
+</h5>
+
+<a th:text="${currentuser.getPassword()}"></a>
+
+<h5>
+    
+</h5>
+
+<a class="waves-effect waves-light btn" th:href="@{/changeuserdata}">Bearbeiten</a>
+
+<h5>
+    
+</h5>
+
+<a class="waves-effect waves-light btn red" th:href="@{/deleteaccount}">Account Löschen</a>
+        

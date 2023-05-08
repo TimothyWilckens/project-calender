@@ -21,8 +21,11 @@
             <a th:text="${kalenderevent.getDate()}"></a>
         </td>
         <td>
-            <a class="waves-effect waves-light btn" th:href="@{/change}">
+            <a class="waves-effect waves-light btn" th:href="@{/changeevent(id=${counter.index})}">
                 <i class="small material-icons">border_color</i>
+            </a>
+            <a class="waves-effect waves-light btn" th:href="@{/deleteevent(id=${counter.index})}">
+                <i class="small material-icons">cancel</i>
             </a>
         </td>
     </tr>
@@ -34,12 +37,3 @@
 <a class="waves-effect waves-light btn" th:href="@{/addevent}">
     <i class="large material-icons">add</i>
 </a>
-
-<!-- Compiled and minified CSS -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-
-<!-- Compiled and minified JavaScript -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-
-<!-- Icons -->
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">

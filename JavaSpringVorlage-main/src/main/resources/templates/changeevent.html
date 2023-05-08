@@ -1,0 +1,24 @@
+<h3>Änderungen am Termin</h3>
+<hr>
+<form th:action="@{/changeeventsubmit}" class="col-4">
+    <div class="mb-3">
+      Ursprünglicher Name: <a th:text="${kalenderevent.getName()}"></a>
+      <h6></h6>
+      <label for="name" class="form-label">Neuer Name</label>
+      <input type="text" class="form-control" id="name" placeholder="Name" th:name="name">
+    </div>
+
+    <div class="mb-3">
+      Ursprüngliches Datum: <a th:text="${kalenderevent.getDate()}"></a>
+      <h6></h6>
+      <label for="date" class="form-label">Neue Mailadresse</label>
+      <input type="date" class="form-control" id="date" placeholder="Datum" th:name="date">
+    </div>
+
+    <input type="number" class="form-control" th:value="${id}" th:name="id" style="display: none;" >
+
+    <div class="col-auto">
+      <button type="submit" class="btn btn-success mb-3">Neuen Eintrag bestätigen</button>
+    </div>
+</form>
+<a class="btn btn-success btn-sm" role="button" th:href="@{/terminliste}">Abbrechen</a>

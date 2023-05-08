@@ -1,0 +1,29 @@
+<h3>Nutzerdaten ändern</h3>
+<hr>
+<form th:action="@{/changeuserdatasubmit}" class="col-4">
+    <div class="mb-3">
+        Ursprünglicher Name: <a th:text="${currentuser.getUsername()}"></a>
+        <h6></h6>
+        <label for="username" class="form-label">Neuer Name</label>
+        <input type="text" class="form-control" id="username" placeholder="Accountname" th:name="username">
+    </div>
+
+    <div class="mb-3">
+        Ursprüngliche Mail: <a th:text="${currentuser.getEmail()}"></a>
+        <h6></h6>
+        <label for="email" class="form-label">Neue Mailadresse</label>
+        <input type="email" class="form-control" id="email" placeholder="Accountmail" th:name="email">
+      </div>
+
+    <div class="mb-3">
+        Ursprüngliches Passwort: <a th:text="${currentuser.getPassword()}"></a>
+        <h6></h6>
+        <label for="password" class="form-label">Neues Passwort</label>
+        <input type="text" class="form-control" id="password" placeholder="Passwort" th:name="password">
+    </div>
+
+    <div class="col-auto">
+      <button type="submit" class="btn btn-success mb-3">Bestätigen</button>
+    </div>
+</form>
+<a class="btn btn-success btn-sm" role="button" th:href="@{/manageaccount}">Abbrechen</a>

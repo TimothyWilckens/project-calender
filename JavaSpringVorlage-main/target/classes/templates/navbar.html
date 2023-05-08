@@ -1,17 +1,11 @@
 <nav>
     <div class="nav-wrapper">
-      <a href="/" class="brand-logo center">
+      <a href="/" class="brand-logo left">
         <i class="material-icons">date_range</i>Kalender Projekt</a>
       <ul class="right hide-on-med-and-down">
-        <li th:if="${activePage == 'home'}">
-          <a class="active" th:href="@{/?activePage=home}">Home</a>
-        </li>
-        <li th:unless="${activePage == 'home'}">
-          <a th:href="@{/?activePage=home}">Home</a>
-        </li>
 
-        <li th:if="${activePage == 'terminliste'}">
-          <a class="active" th:href="@{/terminliste}">
+        <li class="active" th:if="${activePage == 'terminliste'}">
+          <a th:href="@{/terminliste}">
             <i class="material-icons left">format_list_bulleted</i>Anstehende Termine</a>
         </li>
         <li th:unless="${activePage == 'terminliste'}">
@@ -19,8 +13,8 @@
             <i class="material-icons left">format_list_bulleted</i>Anstehende Termine</a>
         </li>
 
-        <li th:if="${activePage == 'kalenderansicht'}">
-          <a class="active" th:href="@{/kalenderansicht}">
+        <li class="active" th:if="${activePage == 'kalenderansicht'}">
+          <a th:href="@{/kalenderansicht}">
             <i class="material-icons left">today</i>Kalender</a>
         </li>
         <li th:unless="${activePage == 'kalenderansicht'}">
@@ -28,22 +22,80 @@
             <i class="material-icons left">today</i>Kalender</a>
         </li>
 
-        <li th:if="${activePage == 'allaccounts'}">
-          <a class="active" th:href="@{/allaccounts}">Alle Nutzer</a>
+        <li class="active" th:if="${activePage == 'login'}">
+          <a th:href="@{/login}">
+            <i class="material-icons left">person</i>Anmelden</a>
         </li>
-        <li th:unless="${activePage == 'allaccounts'}">
-          <a th:href="@{/allaccounts}">Alle Nutzer</a>
+        <li th:unless="${activePage == 'login'}">
+          <a th:href="@{/login}">
+            <i class="material-icons left">person</i>Anmelden</a>
+        </li>
+
+        <li class="active" th:if="${activePage == 'registration'}">
+          <a th:href="@{/registration}">
+            <i class="material-icons left">person_add</i>Neuen Account erstellen</a>
+        </li>
+        <li th:unless="${activePage == 'registration'}">
+          <a th:href="@{/registration}">
+            <i class="material-icons left">person_add</i>Neuen Account erstellen</a>
+        </li>
+
+        <li class="active" th:if="${activePage == 'manageaccount'}">
+          <a th:href="@{/manageaccount}">
+            <i class="material-icons left">settings</i>
+            Accountdaten
+          </a>
+        </li>
+        <li th:unless="${activePage == 'manageaccount'}">
+          <a th:href="@{/manageaccount}">
+            <i class="material-icons left">settings</i>
+            Accountdaten
+          </a>
+        </li>
+
+        <li>
+          <a class="dropdown-button" data-activates="dropdown1" hover="true">
+            <i class="material-icons left">description</i>
+            Account
+            <i class="material-icons right">arrow_drop_down</i>
+          </a>
         </li>
       </ul>
     </div>
 </nav>
+<ul id="dropdown1" class="dropdown-content">
+  <li class="active" th:if="${activePage == 'login'}">
+    <a th:href="@{/login}">
+      <i class="material-icons left">person</i>Account wechseln</a>
+  </li>
+  <li th:unless="${activePage == 'login'}">
+    <a th:href="@{/login}">
+      <i class="material-icons left">person</i>Account wechseln</a>
+  </li>
+  <li class="active" th:if="${activePage == 'registration'}">
+    <a th:href="@{/registration}">
+      <i class="material-icons left">person_add</i>Neuen Account erstellen</a>
+  </li>
+  <li th:unless="${activePage == 'registration'}">
+    <a th:href="@{/registration}">
+      <i class="material-icons left">person_add</i>Neuen Account erstellen</a>
+  </li>
+  <li class="active" th:if="${activePage == 'manageaccount'}">
+    <a th:href="@{/manageaccount}">
+      <i class="material-icons left">settings</i>
+      Accountdaten
+    </a>
+  </li>
+  <li th:unless="${activePage == 'manageaccount'}">
+    <a th:href="@{/manageaccount}">
+      <i class="material-icons left">settings</i>
+      Accountdaten
+    </a>
+  </li>
+</ul>
 
- 
- <!-- Compiled and minified CSS -->
- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-
- <!-- Compiled and minified JavaScript -->
- <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-
- <!-- Icons -->
- <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<script>
+  $(document).on( function(){
+    $('.dropdown-trigger').dropdown();
+});
+</script>
