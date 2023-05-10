@@ -1,22 +1,21 @@
 package gymhum.de.models;
 
-import java.util.ArrayList;
-
 public class User {
     String username;
     String email;
     String password;
-    ArrayList<Kalenderevent> Kalenderevents = new ArrayList<>();
+    int id;
+    Kalenderevent[] Kalenderevents = new Kalenderevent[999];
 
-    public User(String username, String email,String password){
-        setKalenderevents(Kalenderevents);
+    public User(int id, String username, String email, String password){
         setPassword(password);
         setUsername(username);
         setEmail(email);
+        setId(id);
     }
 
-    public void setKalenderevents(ArrayList<Kalenderevent> Kalenderevents) {
-        this.Kalenderevents = Kalenderevents;
+    public void setKalenderevents(Kalenderevent[] kalenderevents) {
+        Kalenderevents = kalenderevents;
     }
     public void setPassword(String password) {
         this.password = password;
@@ -27,7 +26,10 @@ public class User {
     public void setEmail(String email) {
         this.email = email;
     }
-    public ArrayList<Kalenderevent> getKalenderevents() {
+    public void setId(int id) {
+        this.id = id;
+    }
+    public Kalenderevent[] getKalenderevents() {
         return Kalenderevents;
     }
     public String getPassword() {
@@ -39,4 +41,13 @@ public class User {
     public String getEmail() {
         return email;
     }
+    public int getId() {
+        return id;
+    }
+
+    
+    @Override
+	public String toString() {
+		return "TODO";
+	}
 }

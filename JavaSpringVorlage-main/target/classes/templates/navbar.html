@@ -52,50 +52,6 @@
             Accountdaten
           </a>
         </li>
-
-        <li>
-          <a class="dropdown-button" data-activates="dropdown1" hover="true">
-            <i class="material-icons left">description</i>
-            Account
-            <i class="material-icons right">arrow_drop_down</i>
-          </a>
-        </li>
       </ul>
     </div>
 </nav>
-<ul id="dropdown1" class="dropdown-content">
-  <li class="active" th:if="${activePage == 'login'}">
-    <a th:href="@{/login}">
-      <i class="material-icons left">person</i>Account wechseln</a>
-  </li>
-  <li th:unless="${activePage == 'login'}">
-    <a th:href="@{/login}">
-      <i class="material-icons left">person</i>Account wechseln</a>
-  </li>
-  <li class="active" th:if="${activePage == 'registration'}">
-    <a th:href="@{/registration}">
-      <i class="material-icons left">person_add</i>Neuen Account erstellen</a>
-  </li>
-  <li th:unless="${activePage == 'registration'}">
-    <a th:href="@{/registration}">
-      <i class="material-icons left">person_add</i>Neuen Account erstellen</a>
-  </li>
-  <li class="active" th:if="${activePage == 'manageaccount'}">
-    <a th:href="@{/manageaccount}">
-      <i class="material-icons left">settings</i>
-      Accountdaten
-    </a>
-  </li>
-  <li th:unless="${activePage == 'manageaccount'}">
-    <a th:href="@{/manageaccount}">
-      <i class="material-icons left">settings</i>
-      Accountdaten
-    </a>
-  </li>
-</ul>
-
-<script>
-  $(document).on( function(){
-    $('.dropdown-trigger').dropdown();
-});
-</script>
