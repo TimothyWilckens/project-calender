@@ -58,6 +58,32 @@ public class DatabaseController {
 		}
 	}
 
+	public void updateUsername(User user) throws SQLException{
+		Connection connection = connect();
+		if(connection != null){
+			Statement statement = connection.createStatement();
+			statement.execute("UPDATE USERS SET username='"+user.getUsername()+"' WHERE id='"+user.getId()+"'");
+			closeConnection(connection);
+		}
+	}
+	public void updateEmail(User user) throws SQLException{
+		Connection connection = connect();
+		if(connection != null){
+			Statement statement = connection.createStatement();
+			statement.execute("UPDATE USERS SET email='"+user.getEmail()+"' WHERE id='"+user.getId()+"'");
+			closeConnection(connection);
+		}
+	}
+	public void updatePassword(User user) throws SQLException{
+		Connection connection = connect();
+		if(connection != null){
+			Statement statement = connection.createStatement();
+			statement.execute("UPDATE USERS SET password='"+user.getPassword()+"' WHERE id='"+user.getId()+"'");
+			closeConnection(connection);
+		}
+	}
+
+
 	public void removeUser(int id) throws SQLException{
 		Connection connection = connect();
 		if(connection != null){

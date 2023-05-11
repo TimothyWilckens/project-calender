@@ -4,17 +4,12 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import javax.xml.crypto.Data;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.MultiValueMap;
-import org.springframework.validation.DataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import java.util.ArrayList;
 
 
 import gymhum.de.models.Kalenderevent;
@@ -192,19 +187,19 @@ public class KalenderController {
                 System.out.println("Name wurde nicht geändert");
             } else{
                 currentUser.setUsername(username);
-                db.getUsers().get(currentUser.getId()).setUsername(username);
+                db.updateUsername(currentUser);
             }
             if(email.equals("null")){
                 System.out.println("Mail wurde nicht geändert");
             } else{
                 currentUser.setEmail(email);
-                db.getUsers().get(currentUser.getId()).setEmail(email);
+                db.updateEmail(currentUser);
             }
             if(password.equals("null")){
                 System.out.println("Passwort wurde nicht geändert");
             } else{
                 currentUser.setPassword(password);
-                db.getUsers().get(currentUser.getId()).setPassword(password);;
+                db.updatePassword(currentUser);
             }
         } catch (SQLException e) {
             System.out.println("Beim Ändern der Nutzerdaten ist ein Fehler aufgetreten");
