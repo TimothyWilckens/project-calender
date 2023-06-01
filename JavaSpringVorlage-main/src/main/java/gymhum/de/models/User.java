@@ -5,7 +5,6 @@ public class User {
     String email;
     String password;
     int id;
-    Kalenderevent[] Kalenderevents = new Kalenderevent[999];
 
     public User(int id, String username, String email, String password){
         setPassword(password);
@@ -14,9 +13,6 @@ public class User {
         setId(id);
     }
 
-    public void setKalenderevents(Kalenderevent[] kalenderevents) {
-        Kalenderevents = kalenderevents;
-    }
     public void setPassword(String password) {
         this.password = password;
     }
@@ -28,9 +24,6 @@ public class User {
     }
     public void setId(int id) {
         this.id = id;
-    }
-    public Kalenderevent[] getKalenderevents() {
-        return Kalenderevents;
     }
     public String getPassword() {
         return password;

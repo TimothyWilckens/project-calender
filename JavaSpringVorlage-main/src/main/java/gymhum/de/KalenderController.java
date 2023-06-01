@@ -21,15 +21,18 @@ public class KalenderController {
     ArrayList<User> alluser;
     User admin;
     User currentUser;
+    ArrayList<Kalenderevent> allKalenderevents;
     ArrayList<Kalenderevent> activeKalenderevents;
     
     public KalenderController(){
         setAlluser(new ArrayList<>());
         admin();
+        setAllKalenderevents(new ArrayList<>());
         setActiveKalenderevents(new ArrayList<>());
+        loadevents();
         testuser();
         active_kalenderevents_in_array();
-        System.out.println(currentUser.getKalenderevents()[0].getDate());
+        System.out.println(activeKalenderevents.get(0));
     }
 
 
@@ -50,26 +53,10 @@ public class KalenderController {
                 if((allusers.getUsername().equals(nameormail) && allusers.getPassword().equals(password)) || (allusers.getEmail().equals(nameormail) && allusers.getPassword().equals(password))){
                     setCurrentUser(allusers);
                     if(allusers.getUsername().equals(admin.getUsername()) && allusers.getPassword().equals(admin.getPassword()) || (allusers.getEmail().equals(admin.getEmail()) && allusers.getPassword().equals(admin.getPassword()))){
-                        ArrayList<Integer> removeindexes = new ArrayList<>();
-                        for(Kalenderevent currentkalenderevents : activeKalenderevents){
-                            removeindexes.add(currentkalenderevents.getId());
-                            System.out.println(currentkalenderevents.getId());
-                        }
-                        for(int removeindex : removeindexes){
-                            activeKalenderevents.remove(removeindex);
-                        }
                         active_kalenderevents_in_array();
                         System.out.println("Anmeldung mit Adminaccount");
                         return "redirect:/allaccounts";
                     } else{
-                        ArrayList<Integer> removeindexes = new ArrayList<>();
-                        for(Kalenderevent currentkalenderevents : activeKalenderevents){
-                            removeindexes.add(currentkalenderevents.getId());
-                            System.out.println(currentkalenderevents.getId());
-                        }
-                        for(int removeindex : removeindexes){
-                            activeKalenderevents.remove(removeindex);
-                        }
                         active_kalenderevents_in_array();
                         return "redirect:/terminliste";
                     }
@@ -103,17 +90,15 @@ public class KalenderController {
         User user = new User(Integer.parseInt(body.getFirst("id").toString()), body.getFirst("username").toString(), body.getFirst("email").toString(), body.getFirst("password").toString());
         try {
             DatabaseController db = new DatabaseController();
+            for(User eachuser : db.getUsers()){
+                if((user.getUsername().equals(eachuser.getUsername()) && user.getPassword().equals(eachuser.getPassword())) || (user.getEmail().equals(eachuser.getEmail()) && user.getPassword().equals(eachuser.getPassword()))){
+                    return "redirect:/registrationerror";
+                }
+            }
             db.addUser(user);
             alluser.add(alluser.size(), user);
             user.setId(alluser.size()-1);
             setCurrentUser(user);
-            ArrayList<Integer> removeindexes = new ArrayList<>();
-            for(Kalenderevent currentkalenderevents : activeKalenderevents){
-                removeindexes.add(currentkalenderevents.getId());
-            }
-            for(int removeindex : removeindexes){
-                activeKalenderevents.remove(removeindex);
-            }
             active_kalenderevents_in_array();
             System.out.println(currentUser);
         }
@@ -138,18 +123,13 @@ public class KalenderController {
         User user = new User(Integer.parseInt(body.getFirst("id").toString()), body.getFirst("username").toString(), body.getFirst("email").toString(), body.getFirst("password").toString());
         try {
             DatabaseController db = new DatabaseController();
+            for(User eachuser : db.getUsers()){
+                if((user.getUsername().equals(eachuser.getUsername()) && user.getPassword().equals(eachuser.getPassword())) || (user.getEmail().equals(eachuser.getEmail()) && user.getPassword().equals(eachuser.getPassword()))){
+                    return "redirect:/registrationerror";
+                }
+            }
             db.addUser(user);
             alluser.add(alluser.size(), user);
-            setCurrentUser(user);
-            ArrayList<Integer> removeindexes = new ArrayList<>();
-            for(Kalenderevent currentkalenderevents : activeKalenderevents){
-                removeindexes.add(currentkalenderevents.getId());
-            }
-            for(int removeindex : removeindexes){
-                activeKalenderevents.remove(removeindex);
-            }
-            active_kalenderevents_in_array();
-            System.out.println(currentUser);
         }
         catch(Exception e){
             System.out.println("Es ist ein Fehler aufgetreten!");
@@ -158,6 +138,13 @@ public class KalenderController {
 
         // redirect to player-manage-page
         return "redirect:/allaccounts";
+    }
+
+    // Fehler, wenn Account bereits existiert
+    @GetMapping("/registrationerror")
+    public String registrationerror(@RequestParam(name="activePage", required = false, defaultValue = "registrationerror") String activePage, Model model){
+        model.addAttribute("activePage", "registrationerror");
+        return "index.html";
     }
 
 
@@ -200,6 +187,26 @@ public class KalenderController {
             } else{
                 currentUser.setPassword(password);
                 db.updatePassword(currentUser);
+            }
+            for(Kalenderevent currentEvent : activeKalenderevents){
+                if(username.equals("null")){
+                    System.out.println("Name wurde nicht geändert");
+                } else{
+                    currentEvent.setName(username);
+                    db.updateEventUsername(currentEvent);
+                }
+                if(email.equals("null")){
+                    System.out.println("Mail wurde nicht geändert");
+                } else{
+                    currentEvent.setEmail(email);
+                    db.updateEventEmail(currentEvent);
+                }
+                if(password.equals("null")){
+                    System.out.println("Passwort wurde nicht geändert");
+                } else{
+                    currentEvent.setPassword(password);
+                    db.updateEventPassword(currentEvent);
+                }
             }
         } catch (SQLException e) {
             System.out.println("Beim Ändern der Nutzerdaten ist ein Fehler aufgetreten");
@@ -265,7 +272,7 @@ public class KalenderController {
     public String terminliste(@RequestParam(name="activePage", required = false, defaultValue = "terminliste") String activePage, Model model){
         model.addAttribute("activePage", "terminliste");
         model.addAttribute("currentuser", currentUser);
-        model.addAttribute("kalenderevents", activeKalenderevents);
+        model.addAttribute("kalenderevents", getActiveKalenderevents());
         return "index.html";
     }
 
@@ -318,21 +325,26 @@ public class KalenderController {
     public String changeEventsubmit(@RequestParam(name="activePage", required = false, defaultValue = "changeeventsubmit") String activePage, @RequestParam(name="id", required = true) int id, @RequestParam(name="name", required = true, defaultValue = "null") String name, @RequestParam(name="date", required = true, defaultValue = "null") String date, Model model){
         model.addAttribute("activePage", "changeeventsubmit");
         model.addAttribute("id", id);
-        System.out.println(date);
-        if(name.equals("null")){
-            System.out.println("Name wurde nicht geändert");
-            activeKalenderevents.get(id).setName("Nicht vorhanden");
-        } else{
-            activeKalenderevents.get(id).setName(name);
-        }
-        if(date.equals("null")){
-            System.out.println("Datum wurde nicht geändert");
-            activeKalenderevents.get(id).setDate("Nicht vorhanden");
-        } else{
-            activeKalenderevents.get(id).setDate(date);
+        DatabaseController db = new DatabaseController();
+        try {
+            if(name.equals("null")){
+                System.out.println("Name wurde nicht geändert");
+            } else{
+                activeKalenderevents.get(id).setName(name);
+                db.updateEventname(db.getEvents().get(id));
+            }
+            if(date.equals("null")){
+                System.out.println("Datum wurde nicht geändert");
+            } else{
+                activeKalenderevents.get(id).setDate(date);
+                db.updateEventdate(db.getEvents().get(id));
+            }
+        } catch (SQLException e) {
+            System.out.println("Es ist ein Fehler beim Ändern des Events aufgetreten");
+            System.out.println(e);
         }
 
-        DatumZuInteger(currentUser.getKalenderevents()[(getActiveKalenderevents().size()-1)]);
+        DatumZuInteger(activeKalenderevents.get(id));
         
         return "redirect:/terminliste";
     }
@@ -346,7 +358,7 @@ public class KalenderController {
     @GetMapping("/addeventsubmit")
     public String addEventsubmit(@RequestParam(name="activePage", required = false, defaultValue = "addeventsubmit") String activePage, @RequestParam(name="name", required = true, defaultValue = "Nicht benannt") String name, @RequestParam(name="date", required = true, defaultValue = "01-01-2000") String date, Model model){
         model.addAttribute("activePage", "addeventsubmit");
-        currentUser.getKalenderevents()[getActiveKalenderevents().size()] = new Kalenderevent(name, date);
+        allKalenderevents.add(new Kalenderevent(name, date, currentUser.getUsername(), currentUser.getEmail(), currentUser.getPassword()));
         active_kalenderevents_in_array();
         return "redirect:/terminliste";
     }
@@ -356,7 +368,7 @@ public class KalenderController {
         model.addAttribute("activePage", "deleteevent");
         model.addAttribute("id", id);
         activeKalenderevents.get(id).setId(id);
-        model.addAttribute("kalenderevent", currentUser.getKalenderevents()[id]);
+        model.addAttribute("kalenderevent", activeKalenderevents.get(id));
         return "index.html";
     }
     @GetMapping("/deleteeventsubmit")
@@ -364,7 +376,7 @@ public class KalenderController {
         model.addAttribute("activePage", "deleteeventsubmit");
         model.addAttribute("id", id);
         activeKalenderevents.remove(getActiveKalenderevents().get(id));
-        currentUser.getKalenderevents()[id] = null;
+        allKalenderevents.remove(getActiveKalenderevents().get(id));
         active_kalenderevents_in_array();
         return "redirect:/terminliste";
     }
@@ -382,8 +394,9 @@ public class KalenderController {
         alluser.add(alluser.size(), user1);
         setCurrentUser(user1);
         System.out.println("Testuser erstellt und hinzugefügt");
-        Kalenderevent Kalenderevent1 = new Kalenderevent("Test", "01-02-2000");
-        currentUser.getKalenderevents()[0] = Kalenderevent1;
+        Kalenderevent Kalenderevent1 = new Kalenderevent("Test", "01-02-2000", user1.getUsername(),user1.getEmail(), user1.getPassword());
+        allKalenderevents.add(Kalenderevent1);
+        active_kalenderevents_in_array();
         System.out.println("Kalenderevent hinzugefügt");
     }
 
@@ -406,13 +419,27 @@ public class KalenderController {
         }
     }
 
+    // Laden der gespeicherten Events in die Liste alleEvents
+    private void loadevents(){
+        DatabaseController db = new DatabaseController();
+        try {
+            for(Kalenderevent eachKalenderevent: db.getEvents()){
+                allKalenderevents.add(eachKalenderevent);
+                System.out.println("Kalenderevents geladen");
+            }
+        } catch (SQLException e) {
+            System.out.println("Es ist ein Fehler beim Laden der Events aus der Datenbank aufgetreten");
+            System.out.println(e);
+        }
+    }
+
 
     // Einbauen der Events in die aktuelle Ansicht
     private void active_kalenderevents_in_array(){
-        for(Kalenderevent alleKalenderevents: currentUser.getKalenderevents()){
-            if (alleKalenderevents != null) {
-                getActiveKalenderevents().remove(alleKalenderevents);
-                getActiveKalenderevents().add(alleKalenderevents);
+        activeKalenderevents.clear();
+        for(Kalenderevent alleKalenderevents: allKalenderevents){
+            if (currentUser.getUsername().equals(alleKalenderevents.getUsername()) && currentUser.getPassword().equals(alleKalenderevents.getPassword()) || (currentUser.getEmail().equals(alleKalenderevents.getEmail()) && currentUser.getPassword().equals(alleKalenderevents.getPassword()))) {
+                activeKalenderevents.add(alleKalenderevents);
                 alleKalenderevents.setId(getActiveKalenderevents().indexOf(alleKalenderevents));
                 System.out.println("Neues aktives Event " + alleKalenderevents.getId());
             }  
@@ -436,6 +463,9 @@ public class KalenderController {
     public User getCurrentUser() {
         return currentUser;
     }
+    public ArrayList<Kalenderevent> getAllKalenderevents() {
+        return allKalenderevents;
+    }
     public ArrayList<Kalenderevent> getActiveKalenderevents() {
         return activeKalenderevents;
     }
@@ -447,6 +477,9 @@ public class KalenderController {
     }
     public void setCurrentUser(User currentUser) {
         this.currentUser = currentUser;
+    }
+    public void setAllKalenderevents(ArrayList<Kalenderevent> allKalenderevents) {
+        this.allKalenderevents = allKalenderevents;
     }
     public void setActiveKalenderevents(ArrayList<Kalenderevent> activeKalenderevents) {
         this.activeKalenderevents = activeKalenderevents;

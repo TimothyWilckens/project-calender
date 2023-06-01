@@ -11,7 +11,8 @@ public class VorlageJsApplication {
 	
 	public static void main(String[] args) throws SQLException {
 		DatabaseController db = new DatabaseController();
-		db.createTable();
+		db.createTableUser();
+		db.createTableEvents();
 		SpringApplication.run(VorlageJsApplication.class, args);
 
 	}
